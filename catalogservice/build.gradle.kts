@@ -10,6 +10,7 @@ group = "dev.babal"
 version = "0.0.1-SNAPSHOT"
 
 extra["springCloudVersion"] = "2024.0.0"
+extra["testcontainersVersion"] = "1.17.3"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -18,15 +19,16 @@ dependencies {
     implementation("org.springframework.retry:spring-retry")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
-    runtimeOnly("org.postgresql:postgresql")
 
+    compileOnly("org.projectlombok:lombok")
+    runtimeOnly("org.postgresql:postgresql")
+    annotationProcessor("org.projectlombok:lombok")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    testImplementation("org.testcontainers:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
 }
 dependencyManagement {
     imports {
