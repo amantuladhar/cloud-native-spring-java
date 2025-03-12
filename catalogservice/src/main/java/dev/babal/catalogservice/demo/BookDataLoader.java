@@ -22,10 +22,10 @@ public class BookDataLoader {
     public void loadData() {
         bookRepository.deleteAll();
         bookRepository.deleteAll();
-        var books = List.of(Book.of("9783161484", "The Great Gatsby", "F. Scott Fitzgerald", 1925D),
-            Book.of("9781566199", "To Kill a Mockingbird", "Harper Lee", 1960D),
-            Book.of("9780743273", "1984", "George Orwell", 1949D),
-            Book.of("9780452284", "Pride and Prejudice", "Jane Austen", 1813D));
+        var books = List.of(Book.of("9783161484", "The Great Gatsby", "F. Scott Fitzgerald", 1925D, null),
+            Book.of("9781566199", "To Kill a Mockingbird", "Harper Lee", 1960D, null),
+            Book.of("9780743273", "1984", "George Orwell", 1949D, null),
+            Book.of("9780452284", "Pride and Prejudice", "Jane Austen", 1813D, null));
         bookRepository.saveAll(books);
     }
 }
