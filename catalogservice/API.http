@@ -9,10 +9,10 @@ POST http://localhost:9001/books
 Content-Type: application/json
 
 {
-    "isbn": "12345678AAA",
+    "isbn": "1234567890",
     "title": "Sample Book Title",
     "author": "Sample Author",
-    "price": -19.99
+    "price": 19.99
 }
 
 ###
