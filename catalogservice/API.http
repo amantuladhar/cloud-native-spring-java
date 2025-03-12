@@ -1,0 +1,17 @@
+GET http://localhost:9001
+
+###
+POST http://localhost:9001/books
+Content-Type: application/json
+
+{
+    "isbn": "12345678AAA",
+    "title": "Sample Book Title",
+    "author": "Sample Author",
+    "price": -19.99
+}
+
+###
+
+GET http://localhost:9001/books
+Content-Type: application/json
