@@ -1,5 +1,9 @@
 GET http://localhost:9001
 
+### send refresh event so data gets updated
+POST http://localhost:9001/actuator/refresh
+
+
 ###
 POST http://localhost:9001/books
 Content-Type: application/json

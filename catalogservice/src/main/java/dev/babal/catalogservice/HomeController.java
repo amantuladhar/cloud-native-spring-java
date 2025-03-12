@@ -14,6 +14,6 @@ public class HomeController {
 
     @GetMapping
     public String getGreeting() {
-        return polarProperties.greeting();
+        return polarProperties.getGreeting();
     }
 }
