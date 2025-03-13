@@ -5,6 +5,11 @@ on:
       - catalogservice/**
   workflow_dispatch:
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: amantuladhar/catalog-service
+  VERSION: latest
+
 jobs:
   build:
     name: (Catalog Service) Build and Test
@@ -30,7 +35,7 @@ jobs:
         uses: anchore/scan-action@v3
         id: scan
         with:
-          path: "${{ github.workspace }}/catalogservice"   
+          path: "${{ github.workspace }}/catalogservice"
           fail-build: false
           severity-cutoff: high
       - name: Upload vulnerability report
@@ -38,3 +43,49 @@ jobs:
         if: success() || failure()
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
+  package:
+    runs-on: ubuntu-22.04
+    name: (Catalog Service) Package And Publish
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [ build ]
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+    steps:
+      - name: (Catalog Service) Checkout source code
+        uses: actions/checkout@v4
+      - name: (Catalog Service) Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+      - name: (Catalog Service) Build container image
+        working-directory: catalogservice
+        run: |
+          chmod +x gradlew
+          ./gradlew bootBuildImage \
+                --imageName=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+      - name: (Catalog Service) OCI Image Scan
+        uses: anchore/scan-action@v3
+        id: scan
+        with:
+          image: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
+          fail-build: false
+          severity-cutoff: high
+          acs-report-enable: true
+      - name: (Catalog Service) Upload vulnerability report
+        uses: github/codeql-action/upload-sarif@v3
+        if: success() || failure()
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+      - name: (Catalog Service) Login Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: (Catalog Service) Publish Container Image
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
