@@ -1,5 +1,7 @@
 package dev.babal.ordersservice.order.domain;
 
+import dev.babal.ordersservice.book.Book;
+import dev.babal.ordersservice.book.BookClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -9,9 +11,14 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final BookClient bookClient;
 
     static Order buildRejectedOrder(String isbn, int quantity) {
         return Order.of(isbn, null, null, quantity, OrderStatus.REJECTED);
+    }
+
+    static Order buildAcceptedOrder(Book book, int quantity) {
+        return Order.of(book.isbn(), book.title() + " - " + book.author(), book.price(), quantity, OrderStatus.ACCEPTED);
     }
 
     public Flux<Order> findAll() {
@@ -19,7 +26,9 @@ public class OrderService {
     }
 
     public Mono<Order> submitOrder(String isbn, int quantity) {
-        return Mono.just(buildRejectedOrder(isbn, quantity))
+        return bookClient.getBookByIsbn(isbn)
+            .map(book -> buildAcceptedOrder(book, quantity))
+            .defaultIfEmpty(buildRejectedOrder(isbn, quantity))
             .flatMap(orderRepository::save);
     }
 }

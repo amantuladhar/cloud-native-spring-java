@@ -38,5 +38,5 @@ management:
     web:
       exposure:
         include: refresh
-polar:
+cnative:
   greeting: Welcome to local book Catalog
