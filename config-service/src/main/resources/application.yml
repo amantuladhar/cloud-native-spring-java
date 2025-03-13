@@ -23,4 +23,9 @@ server:
       max: 50
       min-spare: 5
   shutdown: graceful
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 

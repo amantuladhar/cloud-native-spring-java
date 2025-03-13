@@ -1,1 +1,4 @@
 GET http://localhost:8888/catalog-service/default
+###
+
+GET http://localhost:8888/actuator/health

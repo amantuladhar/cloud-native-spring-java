@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
     java
     id("org.springframework.boot") version "3.4.3"
@@ -44,6 +46,19 @@ dependencies {
     testImplementation("org.testcontainers:r2dbc")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+}
+
+tasks.withType<BootBuildImage> {
+    imageName.set(project.name);
+    environment.set(mapOf("BP_JVM_VERSION" to "17.*"))
+
+    docker {
+        publishRegistry {
+            username.set(project.findProperty("registryUsername") as String?)
+            password.set(project.findProperty("registryToken") as String?)
+            url.set(project.findProperty("registryUrl") as String?)
+        }
+    }
 }
 
 tasks.withType<Test> {
