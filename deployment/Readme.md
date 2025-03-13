@@ -7,3 +7,4 @@
 - `minikube stop --profile cnative`
 - `minikube delete --profile cnative`
 - `kubectl logs deployments/<deployment-name> -n <namespace>`
+- `minikube image load catalog-service --profile cnative`
