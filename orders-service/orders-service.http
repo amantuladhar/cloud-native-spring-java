@@ -1,0 +1,7 @@
+POST http://localhost:9100/orders
+Content-Type: application/json
+
+{
+    "isbn": "1231231232",
+    "quantity": 2
+}

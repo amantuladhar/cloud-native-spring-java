@@ -9,12 +9,12 @@ services:
       - BPL_JVM_THREAD_COUNT=50
       - BPL_DEBUG_ENABLED=true
       - BPL_DEBUG_PORT=5005
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://catalog-service-db:5432/catalog_service_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://cnative-db:5432/catalog_service_db
       - SPRING_PROFILES_ACTIVE=testdata
       - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
-      - SPRING_CLOUD_CONFIG_FAIL_FAST=true
+      - SPRING_CLOUD_CONFIG_FAIL_FAST=false
     depends_on:
-      - catalog-service-db
+      - cnative-db
       - config-service
   config-service:
     image: config-service
@@ -26,15 +26,15 @@ services:
       - BPL_JVM_THREAD_COUNT=10
       - BPL_DEBUG_ENABLED=true
       - BPL_DEBUG_PORT=5005
-  catalog-service-db:
+  cnative-db:
     image: postgres:17.4
-    container_name: catalog-service-db
+    container_name: cnative-db
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=catalog_service_db
     volumes:
-      - "./AAA_build/dv-catalog-service-db:/var/lib/postgresql/data"
+      - "./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "./AAA_build/db-volume:/var/lib/postgresql/data"
 
