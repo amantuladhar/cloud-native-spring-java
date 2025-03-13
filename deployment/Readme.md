@@ -8,3 +8,4 @@
 - `minikube delete --profile cnative`
 - `kubectl logs deployments/<deployment-name> -n <namespace>`
 - `minikube image load catalog-service --profile cnative`
+- `kubectl port-forward service/catalog-service 9001:80`
