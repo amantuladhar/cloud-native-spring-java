@@ -1,23 +1,26 @@
 spring:
-    application:
-        name: config-service
-    cloud:
-        config:
-            server:
-                git:
-                    uri: https://github.com/amantuladhar/cloud-native-spring-java
-                    default-label: main
-                    search-paths: config-store
-                    clone-on-start: true
-                    timeout: 5
-                    force-pull: true
+  application:
+    name: config-service
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/amantuladhar/cloud-native-spring-java
+          default-label: main
+          search-paths: config-store
+          clone-on-start: true
+          timeout: 5
+          force-pull: true
 
 server:
-    port: 8888
-    tomcat:
-        connection-timeout: 2s
-        keep-alive-timeout: 15s
-        threads:
-            max: 50
-            min-spare: 5
+  port: 8888
+  tomcat:
+    connection-timeout: 2s
+    keep-alive-timeout: 15s
+    threads:
+      max: 50
+      min-spare: 5
+  shutdown: graceful
 

@@ -21,7 +21,7 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["/bin/sh", "-c", "sleep 5"]
+                command: [ "/bin/sh", "-c", "sleep 5" ]
           ports:
             - containerPort: 9001
           env:
@@ -31,4 +31,7 @@ spec:
               value: jdbc:postgresql://cnative-postgres:5432/catalog_service_db
             - name: SPRING_PROFILES_ACTIVE
               value: testdata
-
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service:8888
+            - name: SPRING_CLOUD_CONFIG_FAIL_FAST
+              value: 'true'
