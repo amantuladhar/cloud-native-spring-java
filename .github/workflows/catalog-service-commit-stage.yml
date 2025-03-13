@@ -50,6 +50,7 @@ jobs:
         with:
           kubeconform: latest
       - name: Validate Kubernetes manifests
+        working-directory: catalogservice
         run: |
           kubeconform --strict k8s
   package:
