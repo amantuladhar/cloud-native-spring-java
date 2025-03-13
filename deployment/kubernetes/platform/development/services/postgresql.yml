@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cnative-postgres
+  labels:
+    db: cnative-postgres
+spec:
+  selector:
+    matchLabels:
+      db: cnative-postgres
+  template:
+    metadata:
+      labels:
+        db: cnative-postgres
+    spec:
+      containers:
+        - name: cnative-postgres
+          image: postgres:17.4
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: catalog_service_db
+          resources:
+            requests:
+              cpu: 100m
+              memory: 60Mi
+            limits:
+              cpu: 200m
+              memory: 120Mi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cnative-postgres
+  labels:
+    db: cnative-postgres
+spec:
+  type: ClusterIP
+  selector:
+    db: cnative-postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
