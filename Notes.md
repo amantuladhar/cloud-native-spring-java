@@ -1,3 +1,7 @@
+# TODO
+- [ ] Reduce inner loop for local dev
+  - https://paketo.io/docs/howto/java/#enable-process-reloading
+  - Spring devtools
 
 # Kubernetes Commands
 - `kubectl create deployment <deployment-name> --image=<image-name>`
@@ -11,4 +15,7 @@
 
 # Security Vulnerabilities Tool
 - https://github.com/anchore/grype
+
+# Tools
+- https://docs.tilt.dev/install.html
 
