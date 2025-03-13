@@ -1,0 +1,27 @@
+services:
+    catalog-service:
+        image: catalog-service
+        container_name: catalog-service
+        ports:
+            - "9001:9001"
+            - "5005:5005"
+        environment:
+            - BPL_JVM_THREAD_COUNT=50
+            - BPL_DEBUG_ENABLED=true
+            - BPL_DEBUG_PORT=5005
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://catalog-service-db:5432/catalog_service_db
+            - SPRING_PROFILES_ACTIVE=testdata
+        depends_on:
+            - catalog-service-db
+    catalog-service-db:
+        image: postgres:17.4
+        container_name: catalog-service-db
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=catalog_service_db
+        volumes:
+            - "./AAA_build/dv-catalog-service-db:/var/lib/postgresql/data"
+

@@ -15,9 +15,9 @@ spring:
                 max-interval: 2000
                 multiplier: 1.1
     datasource:
-        username: db_user
-        password: db_password
-        url: jdbc:postgresql://localhost:5432/catalog_service
+        username: postgres
+        password: postgres
+        url: jdbc:postgresql://localhost:5432/catalog_service_db
         hikari:
             maximum-pool-size: 5
             minimum-idle: 2
