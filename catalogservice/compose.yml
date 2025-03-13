@@ -9,3 +9,8 @@ services:
             - "5432:5432"
         volumes:
             - "./build/docker-volume:/var/lib/postgresql/data"
+        networks:
+            - catalog-service
+networks:
+    catalog-service:
+        driver: bridge
