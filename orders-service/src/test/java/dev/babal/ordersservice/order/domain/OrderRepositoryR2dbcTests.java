@@ -46,7 +46,7 @@ class OrderRepositoryR2dbcTests {
 
     @Test
     void findOrderByIdWhenNotExisting() {
-        StepVerifier.create(repository.findById(1L))
+        StepVerifier.create(repository.findById(11231L))
             .expectNextCount(0)
             .verifyComplete();
     }

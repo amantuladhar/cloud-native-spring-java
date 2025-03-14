@@ -16,7 +16,6 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class OrderController {
     private final OrderService orderService;
-    private final ClientProperties clientProperties;
 
     @GetMapping
     public Flux<Order> getOrders() {
@@ -24,13 +23,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public Mono<Order> submitOrder(
-        @Valid @RequestBody OrderRequest orderRequest
-    ) {
-        log.info("Submitting order for ISBN: {}, Quantity: {}, catalog: {}",
-            orderRequest.isbn(), orderRequest.quantity(),
-            clientProperties.getCatalogServiceUri().toString()
-        );
+    public Mono<Order> submitOrder(@Valid @RequestBody OrderRequest orderRequest) {
         return orderService.submitOrder(
             orderRequest.isbn(),
             orderRequest.quantity()
