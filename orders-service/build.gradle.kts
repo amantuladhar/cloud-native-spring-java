@@ -26,26 +26,32 @@ repositories {
 }
 
 dependencies {
+    annotationProcessor("org.projectlombok:lombok")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    compileOnly("org.projectlombok:lombok")
+
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-    compileOnly("org.projectlombok:lombok")
-    runtimeOnly("org.postgresql:postgresql")
-    runtimeOnly("org.postgresql:r2dbc-postgresql")
-    runtimeOnly("org.flywaydb:flyway-core")
-    runtimeOnly("org.flywaydb:flyway-database-postgresql")
-    runtimeOnly("org.springframework:spring-jdbc")
     // MacOS
     runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.79.Final:osx-aarch_64")
-    annotationProcessor("org.projectlombok:lombok")
+    runtimeOnly("org.flywaydb:flyway-core")
+    runtimeOnly("org.flywaydb:flyway-database-postgresql")
+    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("org.postgresql:r2dbc-postgresql")
+    runtimeOnly("org.springframework:spring-jdbc")
+
+    testAnnotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.projectlombok:lombok")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+    testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
-    testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:r2dbc")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<BootBuildImage> {

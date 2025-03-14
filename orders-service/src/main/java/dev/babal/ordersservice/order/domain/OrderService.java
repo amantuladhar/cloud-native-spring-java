@@ -13,11 +13,11 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final BookClient bookClient;
 
-    static Order buildRejectedOrder(String isbn, int quantity) {
+    public static Order buildRejectedOrder(String isbn, int quantity) {
         return Order.of(isbn, null, null, quantity, OrderStatus.REJECTED);
     }
 
-    static Order buildAcceptedOrder(Book book, int quantity) {
+    public static Order buildAcceptedOrder(Book book, int quantity) {
         return Order.of(book.isbn(), book.title() + " - " + book.author(), book.price(), quantity, OrderStatus.ACCEPTED);
     }
 
