@@ -49,7 +49,7 @@ services:
       - SPRING_PROFILES_ACTIVE=testdata
       - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
       - SPRING_CLOUD_CONFIG_FAIL_FAST=false
-      - CNATIVE_CATALOG_SERVICE_URI=http://catalog-service:9001
+#      - CNATIVE_CATALOG_SERVICE_URI=http://catalog-service:9001
     depends_on:
       config-service:
         condition: service_started

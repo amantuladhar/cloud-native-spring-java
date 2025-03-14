@@ -1,2 +1,3 @@
 cnative:
-  catalog-service-uri: "http://config-service:8888"
+  catalog-service-uri: "http://catalog-service:9001"
+

@@ -35,5 +35,10 @@ server:
   netty:
     connection-timeout: 2s
     idle-timeout: 15s
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
 cnative:
   catalog-service-uri: "http://localhost:9001"
