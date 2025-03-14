@@ -5,3 +5,7 @@ Content-Type: application/json
     "isbn": "9783161484",
     "quantity": 2
 }
+
+###
+
+GET http://localhost:9100/orders

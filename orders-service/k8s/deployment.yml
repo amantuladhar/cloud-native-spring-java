@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-service
+  labels:
+    app: orders-service
+spec:
+  selector:
+    matchLabels:
+      app: orders-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: orders-service
+    spec:
+      containers:
+        - name: orders-service
+          image: orders-service
+          imagePullPolicy: IfNotPresent
+          # graceful shutdown
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "/bin/sh", "-c", "sleep 5" ]
+          ports:
+            - containerPort: 9100
+          env:
+            - name: BPL_JVM_THREAD_COUNT
+              value: "50"
+            - name: SPRING_PROFILES_ACTIVE
+              value: testdata
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service:8888
+            - name: SPRING_CLOUD_CONFIG_FAIL_FAST
+              value: 'true'
+            - name: SPRING_R2DBC_URL
+              value: r2dbc:postgresql://cnative-postgres:5432/orders_service_db
+            - name: SPRING_FLYWAY_URL
+              value: jdbc:postgresql://cnative-postgres:5432/orders_service_db
+            - name: CNATIVE_CATALOG_SERVICE_URI
+              value: http://catalog-service:9001

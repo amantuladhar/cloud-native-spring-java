@@ -1,4 +1,5 @@
 include('../../../../config-service/Tiltfile')
 include('../../../../catalogservice/Tiltfile')
+include('../../../../orders-service/Tiltfile')
 
 update_settings(max_parallel_updates=1)

@@ -1,5 +1,6 @@
 package dev.babal.catalogservice.web;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/books")
+@Slf4j
 public class BookController {
 
     private final BookService bookService;
@@ -32,6 +34,7 @@ public class BookController {
 
     @GetMapping("/{isbn}")
     public Book getBookByIsbn(@PathVariable String isbn) {
+        log.info("Fetching book details for ISBN: {}", isbn);
         return bookService.viewBookDetails(isbn);
     }
 
