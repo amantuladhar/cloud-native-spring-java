@@ -1,0 +1,2 @@
+cnative:
+  catalog-service-uri: "http://config-service:8888"
