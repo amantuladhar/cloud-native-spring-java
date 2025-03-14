@@ -38,5 +38,5 @@ spec:
               value: r2dbc:postgresql://cnative-postgres:5432/orders_service_db
             - name: SPRING_FLYWAY_URL
               value: jdbc:postgresql://cnative-postgres:5432/orders_service_db
-            - name: CNATIVE_CATALOG_SERVICE_URI
-              value: http://catalog-service:9001
+#            - name: CNATIVE_CATALOG_SERVICE_URI
+#              value: http://catalog-service:9001
