@@ -5,6 +5,21 @@ spring:
     timeout-per-shutdown-phase: 15s
   cloud:
     gateway:
+      default-filters:
+        - name: Retry
+          args:
+            retries: 3
+            methods: GET
+            series: SERVER_ERROR
+            exceptions:
+              - java.io.IOException
+              - java.util.concurrent.TimeoutException
+              - java.net.ConnectException
+            backoff:
+              first-backoff: 100ms
+              max-backoff: 500ms
+              factor: 2
+              basedOnPreviousValue: false
       httpclient:
         connect-timeout: 2000
         response-timeout: 5s
