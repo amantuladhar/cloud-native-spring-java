@@ -9,7 +9,7 @@ spring:
         git:
           uri: https://github.com/amantuladhar/cloud-native-spring-java
           default-label: main
-          search-paths: config-store
+          search-paths: config-store/**
           clone-on-start: true
           timeout: 5
           force-pull: true
