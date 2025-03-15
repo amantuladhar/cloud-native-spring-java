@@ -1,0 +1,9 @@
+services:
+  cnative-rabbitmq:
+    image: rabbitmq:3.10-management
+    container_name: cnative-rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf

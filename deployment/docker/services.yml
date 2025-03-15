@@ -1,0 +1,17 @@
+services:
+  cnative-db:
+    extends:
+      file: psql.yml
+      service: cnative-db
+  cnative-redis:
+    extends:
+      file: redis.yml
+      service: cnative-redis
+  redis-insight:
+    extends:
+      file: redis.yml
+      service: redis-insight
+  cnative-rabbitmq:
+    extends:
+      file: rabbitmq.yml
+      service: cnative-rabbitmq

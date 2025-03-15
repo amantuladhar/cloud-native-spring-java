@@ -1,0 +1,12 @@
+services:
+  cnative-db:
+    image: postgres:17.4
+    container_name: cnative-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - "./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "./AAA_build/db-volume:/var/lib/postgresql/data"

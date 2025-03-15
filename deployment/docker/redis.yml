@@ -1,0 +1,11 @@
+services:
+  cnative-redis:
+    image: redis:7.0.11
+    container_name: cnative-redis
+    ports:
+      - "6379:6379"
+  redis-insight:
+    image: redis/redisinsight
+    container_name: redis-insight
+    ports:
+      - "5540:5540"
