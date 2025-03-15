@@ -1,4 +1,6 @@
 
+- `https://github.com/kubernetes-sigs/metrics-server`
+
 - `minikube start --cpus 2 --memory 4g --driver docker --profile cnative`
 - `kubectl get nodes`
 - `kubectl config get-contexts`

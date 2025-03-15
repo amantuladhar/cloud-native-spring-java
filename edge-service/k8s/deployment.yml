@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-service
+  labels:
+    app: edge-service
+spec:
+  selector:
+    matchLabels:
+      app: edge-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: edge-service
+    spec:
+      containers:
+        - name: edge-service
+          image: edge-service
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "/bin/sh", "-c", "sleep 5" ]
+          ports:
+            - containerPort: 9000
+          env:
+            - name: BPL_JVM_THREAD_COUNT
+              value: "50"
+            - name: CATALOG_SERVICE_URL
+              value: "http://catalog-service:9001"
+            - name: ORDERS_SERVICE_URL
+              value: "http://orders-service:9100"
+            - name: SPRING_DATA_REDIS_HOST
+              value: "cnative-redis"
+            - name: SPRING_DATA_REDIS_PORT
+              value: "6379"
+            - name: LOGGING_LEVEL_IO_GITHUB_RESILIENCE4J
+              value: "DEBUG"

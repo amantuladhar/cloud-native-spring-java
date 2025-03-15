@@ -1,4 +1,20 @@
 services:
+  edge-service:
+    image: edge-service
+    container_name: edge-service
+    ports:
+      - "9000:9000"
+      - "5004:5005"
+    environment:
+      - BPL_JVM_THREAD_COUNT=50
+      - BPL_DEBUG_ENABLED=true
+      - BPL_DEBUG_PORT=5005
+      - CATALOG_SERVICE_URL=http://catalog-service:9001
+      - ORDERS_SERVICE_URL=http://orders-service:9100
+      - SPRING_DATA_REDIS_HOST=cnative-redis
+      - SPRING_DATA_REDIS_PORT=6379
+    depends_on:
+      - cnative-redis
   catalog-service:
     image: catalog-service
     container_name: catalog-service
@@ -71,4 +87,10 @@ services:
     container_name: cnative-redis
     ports:
       - "6379:6379"
+  redis-insight:
+    image: redis/redisinsight
+    container_name: redis-insight
+    ports:
+      - "5540:5540"
+
 

@@ -11,8 +11,8 @@ public class RateLimiterConfig {
     public KeyResolver keyResolver() {
         return exchange -> {
             // Use IP address as the key for rate limiting
-            String ipAddress = exchange.getRequest().getRemoteAddress().getAddress().getHostAddress();
-            return Mono.just(ipAddress);
+            // String ipAddress = exchange.getRequest().getRemoteAddress().getAddress().getHostAddress();
+            return Mono.just("anonymous");
         };
     }
 }
