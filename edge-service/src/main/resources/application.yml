@@ -3,9 +3,23 @@ spring:
     name: edge-service
   lifecycle:
     timeout-per-shutdown-phase: 15s
+  session:
+    redis:
+      namespace: cnative:edge
+    timeout: 15s
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      connect-timeout: 2s
+      timeout: 1s
   cloud:
     gateway:
+      redis-rate-limiter:
+        include-headers: true
       default-filters:
+        - name: SaveSession
         - name: Retry
           args:
             retries: 3
@@ -20,6 +34,12 @@ spring:
               max-backoff: 500ms
               factor: 2
               basedOnPreviousValue: false
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter:
+              replenishRate: 10
+              burstCapacity: 20
+              requestedTokens: 1
       httpclient:
         connect-timeout: 2000
         response-timeout: 5s

@@ -2,6 +2,8 @@
 - [ ] Reduce inner loop for local dev
   - https://paketo.io/docs/howto/java/#enable-process-reloading
   - Spring devtools
+- [ ] (Adaptive) Current Request Limiter
+  - Client Side limiter vs Server side limiter
 
 # Kubernetes Commands
 - `kubectl create deployment <deployment-name> --image=<image-name>`
