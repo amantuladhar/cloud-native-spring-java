@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cnative-keycloak
+  labels:
+    app: cnative-keycloak
+spec:
+  selector:
+    matchLabels:
+      app: cnative-keycloak
+  template:
+    metadata:
+      labels:
+        app: cnative-keycloak
+    spec:
+      containers:
+        - name: cnative-keycloak
+          image: quay.io/keycloak/keycloak:19.0
+          args:
+            - "start-dev"
+            - "--import-realm"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KEYCLOAK_ADMIN
+              value: user
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: password
+          startupProbe:
+            httpGet:
+              path: /realms/master
+              port: 8080
+            failureThreshold: 40
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /realms/master
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 350Mi
+            limits:
+              cpu: 500m
+              memory: 750Mi
+          volumeMounts:
+            - name: cnative-keycloak-config-volume
+              mountPath: /opt/keycloak/data/import
+      volumes:
+        - name: cnative-keycloak-config-volume
+          configMap:
+            name: cnative-keycloak
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cnative-keycloak
+  labels:
+    app: cnative-keycloak
+spec:
+  type: ClusterIP
+  selector:
+    app: cnative-keycloak
+  ports:
+    - protocol: TCP
+      port: 80 # 80 because need to expose this to external work without edge service, maybe we can use edge service
+      targetPort: 8080
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keycloak-ingress
+  labels:
+    app: cnative-keycloak
+spec:
+  rules:
+    - host: cnative-keycloak
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cnative-keycloak
+                port:
+                  number: 80

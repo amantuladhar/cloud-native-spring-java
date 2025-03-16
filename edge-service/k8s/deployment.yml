@@ -37,3 +37,9 @@ spec:
               value: "6379"
             - name: LOGGING_LEVEL_IO_GITHUB_RESILIENCE4J
               value: "DEBUG"
+            - name: SPA_URL
+              value: "http://cnative-ui:9004"
+            - name: KEYCLOAK_CLIENT_SECRET
+              value: "MAzBTLWBNlTgY00vwJLae05dyT8EU9gK"
+            - name: KEYCLOAK_ISSUER_URI
+              value: "http://cnative-keycloak/realms/cnative"
