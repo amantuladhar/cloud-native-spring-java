@@ -65,6 +65,10 @@ services:
       - SPRING_PROFILES_ACTIVE=testdata
       - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
       - SPRING_CLOUD_CONFIG_FAIL_FAST=false
+      - SPRING_RABBITMQ_HOST=cnative-rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=user
+      - SPRING_RABBITMQ_PASSWORD=password
     #      - CNATIVE_CATALOG_SERVICE_URI=http://catalog-service:9001
     depends_on:
       config-service:
