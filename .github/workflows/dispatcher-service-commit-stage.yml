@@ -1,0 +1,101 @@
+name: (Dispatcher Service) Commit Stage
+on:
+  push:
+    paths:
+      - dispatcher-service/**
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: amantuladhar/dispatcher-service
+  VERSION: latest
+
+jobs:
+  build:
+    name: (Dispatcher Service) Build and Test
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+      - name: Build, unit tests and integration tests
+        working-directory: dispatcher-service
+        run: |
+          chmod +x gradlew
+          ./gradlew build
+      - name: Code vulnerability scanning
+        uses: anchore/scan-action@v3
+        id: scan
+        with:
+          path: "${{ github.workspace }}/dispatcher-service"
+          fail-build: false
+          severity-cutoff: high
+      - name: Upload vulnerability report
+        uses: github/codeql-action/upload-sarif@v3
+        if: success() || failure()
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+      - name: Setup tools
+        uses: alexellis/setup-arkade@v3
+      - name: Install tools
+        uses: alexellis/arkade-get@master
+        with:
+          kubeconform: latest
+      - name: Validate Kubernetes manifests
+        working-directory: dispatcher-service
+        run: |
+          kubeconform --strict k8s
+  package:
+    runs-on: ubuntu-22.04
+    name: (Dispatcher Service) Package And Publish
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [ build ]
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+    steps:
+      - name: (Dispatcher Service) Checkout source code
+        uses: actions/checkout@v4
+      - name: (Dispatcher Service) Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+      - name: (Dispatcher Service) Build container image
+        working-directory: dispatcher-service
+        run: |
+          chmod +x gradlew
+          ./gradlew bootBuildImage \
+                --imageName=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+      - name: (Dispatcher Service) OCI Image Scan
+        uses: anchore/scan-action@v3
+        id: scan
+        with:
+          image: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
+          fail-build: false
+          severity-cutoff: high
+          acs-report-enable: true
+      - name: (Dispatcher Service) Upload vulnerability report
+        uses: github/codeql-action/upload-sarif@v3
+        if: success() || failure()
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+      - name: (Dispatcher Service) Login Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: (Dispatcher Service) Publish Container Image
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
