@@ -34,6 +34,7 @@ services:
       - SPRING_PROFILES_ACTIVE=testdata
       - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
       - SPRING_CLOUD_CONFIG_FAIL_FAST=false
+      - KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/cnative
     depends_on:
       config-service:
         condition: service_started
