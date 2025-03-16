@@ -13,8 +13,13 @@ services:
       - ORDERS_SERVICE_URL=http://orders-service:9100
       - SPRING_DATA_REDIS_HOST=cnative-redis
       - SPRING_DATA_REDIS_PORT=6379
+      - SPA_URL=http://ui:9004
+      - KEYCLOAK_CLIENT_SECRET=MAzBTLWBNlTgY00vwJLae05dyT8EU9gK
+      - KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/cnative
+      # for mac host.docker.internal needs to be added to /etc/hosts
     depends_on:
       - cnative-redis
+      - cnative-keycloak
   catalog-service:
     image: catalog-service
     container_name: catalog-service
@@ -101,3 +106,11 @@ services:
     extends:
       file: rabbitmq.yml
       service: cnative-rabbitmq
+  cnative-keycloak:
+    extends:
+      file: keycloak.yml
+      service: cnative-keycloak
+  ui:
+    extends:
+      file: ui.yml
+      service: ui
