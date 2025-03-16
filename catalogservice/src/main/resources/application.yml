@@ -5,6 +5,11 @@ spring:
     timeout-per-shutdown-phase: 15s
   config:
     import: "optional:configserver:"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8080/realms/cnative}
   cloud:
     config:
       uri: http://localhost:8888
