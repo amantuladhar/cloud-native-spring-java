@@ -12,6 +12,7 @@ version = "0.0.1-SNAPSHOT"
 
 extra["springCloudVersion"] = "2024.0.0"
 extra["testcontainersVersion"] = "1.17.3"
+extra["testKeycloakVersion"] = "3.3.1"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -24,15 +25,20 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
-    compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")
+    compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("com.github.dasniko:testcontainers-keycloak:${property("testKeycloakVersion")}")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testCompileOnly("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
 }
 
 dependencyManagement {
