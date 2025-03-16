@@ -3,11 +3,21 @@ spring:
     name: edge-service
   lifecycle:
     timeout-per-shutdown-phase: 15s
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak: # client registration id
+            client-id: edge-service
+            client-secret: ${KEYCLOAK_CLIENT_SECRET:MAzBTLWBNlTgY00vwJLae05dyT8EU9gK}
+            scope: openid
+        provider:
+          keycloak: # client registration id used above
+            issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8080/realms/cnative}
   session:
     redis:
       namespace: cnative:edge
     timeout: 15s
-
   data:
     redis:
       host: localhost
@@ -28,7 +38,7 @@ spring:
             exceptions:
               - java.io.IOException
               - java.util.concurrent.TimeoutException
-#              - java.net.ConnectException
+            #              - java.net.ConnectException
             backoff:
               first-backoff: 100ms
               max-backoff: 500ms
