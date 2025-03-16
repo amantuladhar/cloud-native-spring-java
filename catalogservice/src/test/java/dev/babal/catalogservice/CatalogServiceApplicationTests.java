@@ -82,6 +82,30 @@ class CatalogServiceApplicationTests {
             });
     }
 
+    @Test
+    void whenPostRequestUnauthorizedThen403() {
+        var expectedBook = Book.of("1231231231", "Title", "Author",
+            9.90, "Polarsophia");
+
+        webTestClient.post().uri("/books")
+            .headers(headers ->
+                headers.setBearerAuth(user2Token.accessToken()))
+            .bodyValue(expectedBook)
+            .exchange()
+            .expectStatus().isForbidden();
+    }
+
+    @Test
+    void whenPostRequestUnauthenticatedThen401() {
+        var expectedBook = Book.of("1231231231", "Title", "Author",
+            9.90, "Polarsophia");
+
+        webTestClient.post().uri("/books")
+            .bodyValue(expectedBook)
+            .exchange()
+            .expectStatus().isUnauthorized();
+    }
+
     private record KeycloakToken(String accessToken) {
         @JsonCreator
         private KeycloakToken(@JsonProperty("access_token") final String accessToken) {
