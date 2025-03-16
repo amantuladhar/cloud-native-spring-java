@@ -35,6 +35,8 @@ public class SecurityConfig {
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         var jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+        // For this to work, we need to modify Keycloak so roles are not nested in realm_access.roles
+        // clientscope -> roles -> mappers -> realm roles -> token claim name
         jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
 
         var jwtAuthenticationConverter = new JwtAuthenticationConverter();
