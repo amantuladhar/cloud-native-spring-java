@@ -75,6 +75,16 @@ services:
         condition: service_started
       cnative-db:
         condition: service_started
+  dispatcher-service:
+    image: dispatcher-service
+    container_name: dispatcher-service
+    environment:
+      - SPRING_RABBITMQ_HOST=cnative-rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=user
+      - SPRING_RABBITMQ_PASSWORD=password
+    depends_on:
+      - cnative-rabbitmq
   cnative-db:
     extends:
       file: psql.yml

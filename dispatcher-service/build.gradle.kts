@@ -22,8 +22,8 @@ repositories {
 extra["springCloudVersion"] = "2024.0.0"
 
 dependencies {
-//	implementation("org.springframework.boot:spring-boot-starter")
-//	implementation("org.springframework.cloud:spring-cloud-function-context")
+    // implementation("org.springframework.boot:spring-boot-starter")
+    // implementation("org.springframework.cloud:spring-cloud-function-context")
     // ^^^____ included on cloud stream
     implementation("org.springframework.cloud:spring-cloud-starter-stream-rabbit")
     compileOnly("org.projectlombok:lombok")

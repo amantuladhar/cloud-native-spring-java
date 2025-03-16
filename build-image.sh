@@ -1,21 +1,10 @@
 #!/bin/sh
 
-cd catalogservice
-./gradlew clean build bootBuildImage
-cd ..
+# List of project directories
+PROJECTS="catalogservice config-service dispatcher-service edge-service orders-service"
 
-cd config-service
-./gradlew clean build bootBuildImage
-cd ..
-
-cd dispatcher-service
-./gradlew clean build bootBuildImage
-cd ..
-
-cd edge-service
-./gradlew clean build bootBuildImage
-cd ..
-
-cd orders-service
-./gradlew clean build bootBuildImage
-cd ..
+for project in $PROJECTS; do
+    cd $project || exit
+    ./gradlew clean build bootBuildImage
+    cd ..
+done
