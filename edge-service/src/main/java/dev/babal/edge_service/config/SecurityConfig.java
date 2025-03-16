@@ -19,7 +19,7 @@ import org.springframework.web.server.WebFilter;
 import reactor.core.publisher.Mono;
 
 @Configuration(proxyBeanMethods = false)
-//@EnableWebFluxSecurity
+@EnableWebFluxSecurity
 public class SecurityConfig {
 
     @Bean
