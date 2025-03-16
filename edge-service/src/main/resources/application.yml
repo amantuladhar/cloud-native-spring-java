@@ -30,6 +30,7 @@ spring:
         include-headers: true
       default-filters:
         - name: SaveSession
+        - name: TokenRelay
         - name: Retry
           args:
             retries: 3
