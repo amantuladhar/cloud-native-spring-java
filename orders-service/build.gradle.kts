@@ -33,6 +33,7 @@ dependencies {
 
     compileOnly("org.projectlombok:lombok")
 
+    implementation("org.springframework.cloud:spring-cloud-starter-stream-rabbit")
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -49,7 +50,6 @@ dependencies {
     runtimeOnly("org.springframework:spring-jdbc")
 
     testAnnotationProcessor("org.projectlombok:lombok")
-    testImplementation("org.projectlombok:lombok")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -58,6 +58,9 @@ dependencies {
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:r2dbc")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
+    testCompileOnly("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
 }
 
 dependencyManagement {
