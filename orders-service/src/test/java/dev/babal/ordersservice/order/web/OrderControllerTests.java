@@ -1,10 +1,15 @@
 package dev.babal.ordersservice.order.web;
 
+import dev.babal.ordersservice.config.SecurityConfig;
 import dev.babal.ordersservice.order.domain.Order;
 import dev.babal.ordersservice.order.domain.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
+import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
@@ -13,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 
 @WebFluxTest(OrderController.class)
+@Import(SecurityConfig.class)
 class OrderControllerTests {
 
     @Autowired
@@ -20,6 +26,9 @@ class OrderControllerTests {
 
     @MockitoBean
     private OrderService orderService;
+
+    @MockitoBean
+    private ReactiveJwtDecoder reactiveJwtDecoder;
 
     @Test
     void whenBookNotAvailableThenRejectOrder() {
@@ -30,6 +39,8 @@ class OrderControllerTests {
 
 
         webClient
+            .mutateWith(SecurityMockServerConfigurers.mockJwt()
+                .authorities(new SimpleGrantedAuthority("ROLE_employee")))
             .post()
             .uri("/orders")
             .bodyValue(orderRequest)

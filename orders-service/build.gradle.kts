@@ -26,6 +26,7 @@ repositories {
 }
 
 extra["springCloudVersion"] = "2024.0.0"
+extra["testKeycloakVersion"] = "3.3.1"
 
 dependencies {
     annotationProcessor("org.projectlombok:lombok")
@@ -39,6 +40,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
 
     // MacOS
@@ -61,6 +63,10 @@ dependencies {
     testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
     testCompileOnly("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("com.github.dasniko:testcontainers-keycloak:${property("testKeycloakVersion")}")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.testcontainers:junit-jupiter")
 }
 
 dependencyManagement {
