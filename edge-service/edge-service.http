@@ -6,7 +6,7 @@ GET http://localhost:9000/orders
 
 ###
 
-POST http://localhost:9000/orders
+POST http://localhost/orders
 Content-Type: application/json
 
 {
