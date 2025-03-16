@@ -15,3 +15,7 @@ services:
     extends:
       file: rabbitmq.yml
       service: cnative-rabbitmq
+  cnative-keycloak:
+    extends:
+      file: keycloak.yml
+      service: cnative-keycloak

@@ -1,0 +1,14 @@
+services:
+  cnative-keycloak:
+    image: quay.io/keycloak/keycloak:19.0
+    container_name: cnative-keycloak
+    command: start-dev --import-realm
+    environment:
+      - KEYCLOAK_ADMIN=user
+      - KEYCLOAK_ADMIN_PASSWORD=password
+    ports:
+      - "8080:8080"
+    volumes:
+        # secret -> cnative-edge-service
+        - ./keycloak:/opt/keycloak/data/import
+
