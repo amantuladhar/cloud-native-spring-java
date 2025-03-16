@@ -10,7 +10,7 @@ spring:
           keycloak: # client registration id
             client-id: edge-service
             client-secret: ${KEYCLOAK_CLIENT_SECRET:MAzBTLWBNlTgY00vwJLae05dyT8EU9gK}
-            scope: openid
+            scope: openid,roles
         provider:
           keycloak: # client registration id used above
             issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8080/realms/cnative}
