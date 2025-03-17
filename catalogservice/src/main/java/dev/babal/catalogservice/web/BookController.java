@@ -20,6 +20,7 @@ public class BookController {
 
     @GetMapping
     public Iterable<Book> getAllBooks() {
+        log.info("Fetching all books from the catalog");
         return bookService.viewBookList();
     }
 

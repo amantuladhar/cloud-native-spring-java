@@ -20,6 +20,12 @@ services:
     depends_on:
       - cnative-redis
       - cnative-keycloak
+      - fluent-bit
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:24224
+        tag: edge-service
   catalog-service:
     image: catalog-service
     container_name: catalog-service
@@ -42,6 +48,13 @@ services:
         condition: service_started
       cnative-keycloak:
         condition: service_started
+      fluent-bit:
+        condition: service_started
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:24224
+        tag: catalog-service
   config-service: # no curl/wget on buildpack image so health check is TBD
     image: config-service
     container_name: config-service
@@ -52,6 +65,13 @@ services:
       - BPL_JVM_THREAD_COUNT=10
       - BPL_DEBUG_ENABLED=true
       - BPL_DEBUG_PORT=5005
+    depends_on:
+      - fluent-bit
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:24224
+        tag: config-service
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
     #   interval: 10s
@@ -86,6 +106,13 @@ services:
         condition: service_started
       cnative-keycloak:
         condition: service_started
+      fluent-bit:
+        condition: service_started
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:24224
+        tag: orders-service
   dispatcher-service:
     image: dispatcher-service
     container_name: dispatcher-service
@@ -96,6 +123,12 @@ services:
       - SPRING_RABBITMQ_PASSWORD=password
     depends_on:
       - cnative-rabbitmq
+      - fluent-bit
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:24224
+        tag: dispatcher-service
   cnative-db:
     extends:
       file: psql.yml
@@ -120,3 +153,15 @@ services:
     extends:
       file: ui.yml
       service: ui
+  grafana:
+    extends:
+      file: observability.yml
+      service: grafana
+  loki:
+    extends:
+      file: observability.yml
+      service: loki
+  fluent-bit:
+    extends:
+      file: observability.yml
+      service: fluent-bit

@@ -102,6 +102,10 @@ resilience4j:
         timeout-duration: 2s
 
 logging:
+  group:
+    circuitbreaker:
+      - io.github.resilience4j
+      - org.springframework.cloud.circuitbreaker
   level:
-    io.github.resilience4j: DEBUG
+    circuitbreaker: info
 
