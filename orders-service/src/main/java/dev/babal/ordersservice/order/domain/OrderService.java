@@ -38,12 +38,18 @@ public class OrderService {
             OrderStatus.DISPATCHED,
             order.createdDate(),
             order.lastModifiedDate(),
-            order.version()
+            order.version(),
+            order.createdBy(),
+            order.lastModifiedBy()
         );
     }
 
     public Flux<Order> findAll() {
         return orderRepository.findAll();
+    }
+
+    public Flux<Order> findAllByCreatedBy(String username) {
+        return orderRepository.findAllByCreatedBy(username);
     }
 
 
