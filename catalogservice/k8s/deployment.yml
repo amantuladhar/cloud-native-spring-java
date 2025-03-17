@@ -35,3 +35,5 @@ spec:
               value: http://config-service:8888
             - name: SPRING_CLOUD_CONFIG_FAIL_FAST
               value: 'true'
+            - name: KEYCLOAK_ISSUER_URI
+              value: "http://cnative-keycloak/realms/cnative"

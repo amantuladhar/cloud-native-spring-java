@@ -1,5 +1,7 @@
 
 - `https://github.com/kubernetes-sigs/metrics-server`
+- `kubectl patch deployment metrics-server -n kube-system --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--kubelet-insecure-tls"}]'`
+- `kubectl rollout restart deployment metrics-server -n kube-system`
 
 - `minikube start --cpus 2 --memory 4g --driver docker --profile cnative`
 - `kubectl get nodes`

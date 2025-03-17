@@ -40,6 +40,8 @@ services:
         condition: service_started
       cnative-db:
         condition: service_started
+      cnative-keycloak:
+        condition: service_started
   config-service: # no curl/wget on buildpack image so health check is TBD
     image: config-service
     container_name: config-service
@@ -75,11 +77,14 @@ services:
       - SPRING_RABBITMQ_PORT=5672
       - SPRING_RABBITMQ_USERNAME=user
       - SPRING_RABBITMQ_PASSWORD=password
+      - KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/cnative
     #      - CNATIVE_CATALOG_SERVICE_URI=http://catalog-service:9001
     depends_on:
       config-service:
         condition: service_started
       cnative-db:
+        condition: service_started
+      cnative-keycloak:
         condition: service_started
   dispatcher-service:
     image: dispatcher-service

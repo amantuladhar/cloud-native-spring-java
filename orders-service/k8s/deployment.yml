@@ -48,3 +48,5 @@ spec:
               value: "user"
             - name: SPRING_RABBITMQ_PASSWORD
               value: "password"
+            - name: KEYCLOAK_ISSUER_URI
+              value: "http://cnative-keycloak/realms/cnative"
