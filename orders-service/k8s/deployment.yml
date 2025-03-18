@@ -13,11 +13,27 @@ spec:
     metadata:
       labels:
         app: orders-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: "9001"
     spec:
       containers:
         - name: orders-service
           image: orders-service
           imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 9100
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 9100
+            initialDelaySeconds: 5
+            periodSeconds: 15
           # graceful shutdown
           lifecycle:
             preStop:
@@ -38,8 +54,8 @@ spec:
               value: r2dbc:postgresql://cnative-postgres:5432/orders_service_db
             - name: SPRING_FLYWAY_URL
               value: jdbc:postgresql://cnative-postgres:5432/orders_service_db
-#            - name: CNATIVE_CATALOG_SERVICE_URI
-#              value: http://catalog-service:9001
+            #            - name: CNATIVE_CATALOG_SERVICE_URI
+            #              value: http://catalog-service:9001
             - name: SPRING_RABBITMQ_HOST
               value: "cnative-rabbitmq"
             - name: SPRING_RABBITMQ_PORT

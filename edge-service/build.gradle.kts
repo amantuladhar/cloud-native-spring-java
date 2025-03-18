@@ -28,9 +28,13 @@ dependencies {
     implementation("org.springframework.session:spring-session-data-redis")
     // implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // MacOS
     runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.79.Final:osx-aarch_64")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+    runtimeOnly("io.github.resilience4j:resilience4j-micrometer")
+
 
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

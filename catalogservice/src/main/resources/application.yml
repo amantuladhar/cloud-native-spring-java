@@ -42,6 +42,16 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh
+        include: refresh,health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
 cnative:
   greeting: Welcome to local book Catalog

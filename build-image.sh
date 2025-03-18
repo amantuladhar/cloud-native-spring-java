@@ -5,6 +5,6 @@ PROJECTS="catalogservice config-service dispatcher-service edge-service orders-s
 
 for project in $PROJECTS; do
     cd $project || exit
-    ./gradlew clean build bootBuildImage
+    ./gradlew bootBuildImage
     cd ..
 done

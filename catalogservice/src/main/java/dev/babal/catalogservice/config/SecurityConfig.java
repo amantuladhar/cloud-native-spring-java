@@ -19,8 +19,8 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(HttpMethod.GET, "/", "/books/**")
-                .permitAll()
+                .requestMatchers("/actuator/**").permitAll() // Free access inside of cluster
+                .requestMatchers(HttpMethod.GET, "/", "/books/**").permitAll()
                 .anyRequest()
                 .hasRole("employee")
             )

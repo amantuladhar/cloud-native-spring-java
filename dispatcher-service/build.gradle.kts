@@ -26,8 +26,12 @@ dependencies {
     // implementation("org.springframework.cloud:spring-cloud-function-context")
     // ^^^____ included on cloud stream
     implementation("org.springframework.cloud:spring-cloud-starter-stream-rabbit")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
