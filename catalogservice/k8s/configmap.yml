@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalog-config
+  labels:
+    app: catalog-service
+data:
+  application.yml: |
+    spring:
+      security:
+        oauth2:
+          resourceserver:
+            jwt:
+              issuer-uri: http://cnative-keycloak:8080/realms/cnative}
+      datasource:
+        username: postgres
+        password: postgres
+        url: jdbc:postgresql://cnative-postgres:5432/catalog_service_db
+    cnative:
+      greeting: Kube Config Map - Greetings

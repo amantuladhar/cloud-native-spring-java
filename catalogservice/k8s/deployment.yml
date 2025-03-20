@@ -43,13 +43,20 @@ spec:
           env:
             - name: BPL_JVM_THREAD_COUNT
               value: "50"
-            - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://cnative-postgres:5432/catalog_service_db
             - name: SPRING_PROFILES_ACTIVE
               value: testdata
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: http://config-service:8888
-            - name: SPRING_CLOUD_CONFIG_FAIL_FAST
-              value: 'true'
-            - name: KEYCLOAK_ISSUER_URI
-              value: "http://cnative-keycloak/realms/cnative"
+            #- name: SPRING_DATASOURCE_URL
+            #  value: jdbc:postgresql://cnative-postgres:5432/catalog_service_db
+            #- name: SPRING_CLOUD_CONFIG_URI
+            #  value: http://config-service:8888
+            #- name: SPRING_CLOUD_CONFIG_FAIL_FAST
+            #  value: 'true'
+            #- name: KEYCLOAK_ISSUER_URI
+            #  value: "http://cnative-keycloak/realms/cnative"
+          volumeMounts:
+            - name: catalog-config-volume
+              mountPath: /workspace/config
+      volumes:
+        - name: catalog-config-volume
+          configMap:
+            name: catalog-config
