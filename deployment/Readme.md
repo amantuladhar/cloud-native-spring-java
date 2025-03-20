@@ -23,3 +23,5 @@
 
 - `./kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin
 - `./kc.sh export --realm <realm_name> --users REALM_FILE --file <output_file_name>.json`
+
+- `https://github.com/external-secrets/external-secrets`
