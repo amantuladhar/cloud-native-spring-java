@@ -27,6 +27,7 @@ repositories {
 
 extra["springCloudVersion"] = "2024.0.0"
 extra["testKeycloakVersion"] = "3.3.1"
+extra["otelVersion"] = "2.14.0"
 
 dependencies {
     annotationProcessor("org.projectlombok:lombok")
@@ -43,6 +44,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
     // MacOS
+    runtimeOnly("io.opentelemetry.javaagent:opentelemetry-javaagent:${property("otelVersion")}")
     runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.79.Final:osx-aarch_64")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.flywaydb:flyway-core")

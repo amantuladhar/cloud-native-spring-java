@@ -5,6 +5,8 @@ services:
     depends_on:
       - loki
       - prometheus
+      - tempo
+      - fluent-bit
     ports:
       - "3000:3000"
     environment:
@@ -37,4 +39,14 @@ services:
       - "9090:9090"
     volumes:
       - ./observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  tempo:
+    image: grafana/tempo:2.5.0
+    container_name: tempo
+    command: -config.file=/etc/tempo-config.yml
+    ports:
+      - "3110:3100"     # Tempo
+      - "4317:4317"     # OTel
+      - "4318:4318"     # OTel
+    volumes:
+      - ./observability/tempo/tempo.yml:/etc/tempo-config.yml
 

@@ -13,6 +13,8 @@ version = "0.0.1-SNAPSHOT"
 extra["springCloudVersion"] = "2024.0.0"
 extra["testcontainersVersion"] = "1.17.3"
 extra["testKeycloakVersion"] = "3.3.1"
+extra["otelVersion"] = "2.14.0"
+
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -25,6 +27,8 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+    runtimeOnly("io.opentelemetry.javaagent:opentelemetry-javaagent:${property("otelVersion")}")
 
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.postgresql:postgresql")

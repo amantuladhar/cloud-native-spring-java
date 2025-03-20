@@ -112,7 +112,8 @@ management:
       probes:
         enabled: true
       group:
-        readiness: readinessState,redis
+        readiness:
+          include: readinessState,redis
   metrics:
     tags:
       application: ${spring.application.name}
@@ -123,4 +124,6 @@ logging:
       - org.springframework.cloud.circuitbreaker
   level:
     circuitbreaker: info
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
 

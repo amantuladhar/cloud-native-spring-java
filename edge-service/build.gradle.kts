@@ -20,6 +20,7 @@ repositories {
 }
 
 extra["springCloudVersion"] = "2024.0.0"
+extra["otelVersion"] = "2.14.0"
 
 dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
@@ -34,7 +35,7 @@ dependencies {
     runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.79.Final:osx-aarch_64")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("io.github.resilience4j:resilience4j-micrometer")
-
+    runtimeOnly("io.opentelemetry.javaagent:opentelemetry-javaagent:${property("otelVersion")}")
 
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

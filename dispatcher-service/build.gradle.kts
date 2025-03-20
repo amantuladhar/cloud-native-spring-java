@@ -20,6 +20,7 @@ repositories {
 }
 
 extra["springCloudVersion"] = "2024.0.0"
+extra["otelVersion"] = "2.14.0"
 
 dependencies {
     // implementation("org.springframework.boot:spring-boot-starter")
@@ -31,6 +32,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
 
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+    runtimeOnly("io.opentelemetry.javaagent:opentelemetry-javaagent:${property("otelVersion")}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
