@@ -48,11 +48,12 @@ jobs:
       - name: Install tools
         uses: alexellis/arkade-get@master
         with:
+          kustomize: latest
           kubeconform: latest
       - name: Validate Kubernetes manifests
         working-directory: catalogservice
         run: |
-          kubeconform --strict k8s
+          kustomize build k8s | kubeconform --strict -
   package:
     runs-on: ubuntu-22.04
     name: (Catalog Service) Package And Publish
